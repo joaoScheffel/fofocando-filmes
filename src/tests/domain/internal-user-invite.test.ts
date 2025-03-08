@@ -1,5 +1,6 @@
 import * as crypto from "node:crypto";
-import InternalUserInvite, {InternalUserPermission} from "../../domain/internal-user-invite";
+import InternalUserInvite from "../../domain/internal-user-invite";
+import {InternalUserPermission} from "../../domain/internal-user";
 
 test("Deve instanciar um convite de usuário interno", () => {
     const inviteInput = {

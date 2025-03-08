@@ -2,7 +2,7 @@ import User, {UserPermission} from "../domain/user";
 import * as crypto from "node:crypto";
 import {UserRepository} from "../domain/user.repository";
 
-export default class SignupUsecase {
+export default class Signup {
     constructor(
         private userRepository: UserRepository
     ) {

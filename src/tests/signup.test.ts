@@ -1,4 +1,4 @@
-import SignupUsecase from "../application/signup.usecase";
+import Signup from "../application/signup";
 import User, {UserPermission} from "../domain/user";
 import {UserRepository} from "../domain/user.repository";
 
@@ -14,7 +14,7 @@ test("Deve registrar um usuário", async () => {
         }
     }
 
-    const createdUser = await new SignupUsecase(userRepositoryFake).execute(input)
+    const createdUser = await new Signup(userRepositoryFake).execute(input)
 
     expect(createdUser.userUuid).toBeDefined()
     expect(createdUser.username).toBe(input.username)

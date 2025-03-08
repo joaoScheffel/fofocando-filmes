@@ -1,8 +1,11 @@
 import {InternalUserInviteRepository} from "../domain/internal-user-invite.repository";
+import InternalUser from "../domain/internal-user";
+import {InternalUserRepository} from "../domain/internal-user.repository";
 
 export default class AcceptInternalUserInvite {
     constructor(
-        private internalUserInviteRepository: InternalUserInviteRepository
+        private internalUserInviteRepository: InternalUserInviteRepository,
+        private internalUserRepository: InternalUserRepository
     ) {
     }
 
@@ -11,5 +14,13 @@ export default class AcceptInternalUserInvite {
 
         inviteToAccept.accept()
         await this.internalUserInviteRepository.update(inviteToAccept)
+
+        const createdInternalUser = InternalUser.create(
+            inviteToAccept.email,
+            '',
+            inviteToAccept.permission
+        )
+
+        await this.internalUserRepository.save(createdInternalUser)
     }
 }

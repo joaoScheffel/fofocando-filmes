@@ -1,5 +1,6 @@
-import InternalUserInvite, {InternalUserPermission} from "../domain/internal-user-invite";
+import InternalUserInvite from "../domain/internal-user-invite";
 import {InternalUserInviteRepository} from "../domain/internal-user-invite.repository";
+import {InternalUserPermission} from "../domain/internal-user";
 
 export default class InviteInternalUser {
     constructor(

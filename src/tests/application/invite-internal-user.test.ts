@@ -1,7 +1,7 @@
-import InternalUserInvite, {InternalUserPermission} from "../domain/internal-user-invite";
+import {InternalUserPermission} from "../../domain/internal-user-invite";
 import * as crypto from "node:crypto";
-import InviteInternalUser from "../application/invite-internal-user";
-import {InternalUserInviteRepository} from "../domain/internal-user-invite.repository";
+import InviteInternalUser from "../../application/invite-internal-user";
+import {InternalUserInviteRepositoryFake} from "../../infra/internal-user-invite.repository";
 
 test('Deve convidar um usuário a ser interno', async () => {
     const inviteInput = {
@@ -10,14 +10,8 @@ test('Deve convidar um usuário a ser interno', async () => {
         invitedBy: crypto.randomUUID()
     }
 
-    const internalUserInviteRepositoryFake: InternalUserInviteRepository = {
-        save(internalUserInvite: InternalUserInvite): Promise<void> {
-            return
-        }
-    }
-
     const invitedInternalUser = await new InviteInternalUser(
-        internalUserInviteRepositoryFake
+        new InternalUserInviteRepositoryFake()
     ).execute(inviteInput)
 
     expect(invitedInternalUser.inviteUuid).toBeDefined()

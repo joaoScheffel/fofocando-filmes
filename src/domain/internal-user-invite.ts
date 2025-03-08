@@ -1,4 +1,5 @@
 import * as crypto from "node:crypto";
+import {InternalUserPermission} from "./internal-user";
 
 export default class InternalUserInvite {
     constructor(
@@ -31,9 +32,4 @@ export default class InternalUserInvite {
     isAccepted(): boolean {
         return !!this.acceptedAt
     }
-}
-
-export enum InternalUserPermission {
-    ADMIN = "ADMIN",
-    MASTER = "MASTER"
 }

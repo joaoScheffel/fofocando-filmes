@@ -1,7 +1,7 @@
-import {InternalUserPermission} from "../../domain/internal-user-invite";
 import * as crypto from "node:crypto";
 import InviteInternalUser from "../../application/invite-internal-user";
 import {InternalUserInviteRepositoryFake} from "../../infra/internal-user-invite.repository";
+import {InternalUserPermission} from "../../domain/internal-user";
 
 test('Deve convidar um usuário a ser interno', async () => {
     const inviteInput = {

@@ -1,5 +1,5 @@
 import * as crypto from "node:crypto";
-import User, {UserPermission} from "../domain/user";
+import User, {UserPermission} from "../../domain/user";
 
 test('Deve instanciar um usuário', () => {
     const input = {

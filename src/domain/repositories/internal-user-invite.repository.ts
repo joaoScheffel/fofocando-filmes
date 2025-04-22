@@ -1,4 +1,4 @@
-import InternalUserInvite from "./internal-user-invite";
+import InternalUserInvite from "../entities/internal-user-invite";
 
 export interface InternalUserInviteRepository {
     save(internalUserInvite: InternalUserInvite): Promise<void>

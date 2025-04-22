@@ -1,6 +1,6 @@
 import Signup from "../../application/signup";
-import User, {UserPermission} from "../../domain/user";
-import {UserRepository} from "../../domain/user.repository";
+import User, {UserPermission} from "../../domain/entities/user";
+import {UserRepository} from "../../domain/repositories/user.repository";
 
 test("Deve registrar um usuário", async () => {
     const input = {

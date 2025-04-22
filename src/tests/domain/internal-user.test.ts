@@ -1,5 +1,5 @@
 import * as crypto from "node:crypto";
-import InternalUser, {InternalUserPermission} from "../../domain/internal-user";
+import InternalUser, {InternalUserPermission} from "../../domain/entities/internal-user";
 
 test("Deve instanciar um usuário interno", () => {
     const internalUserInput = {

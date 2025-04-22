@@ -1,6 +1,6 @@
-import {InternalUserInviteRepository} from "../domain/internal-user-invite.repository";
-import InternalUser from "../domain/internal-user";
-import {InternalUserRepository} from "../domain/internal-user.repository";
+import {InternalUserInviteRepository} from "../domain/repositories/internal-user-invite.repository";
+import InternalUser from "../domain/entities/internal-user";
+import {InternalUserRepository} from "../domain/repositories/internal-user.repository";
 
 export default class AcceptInternalUserInvite {
     constructor(
@@ -9,18 +9,24 @@ export default class AcceptInternalUserInvite {
     ) {
     }
 
-    async execute(inviteUuid: string) {
-        const inviteToAccept = await this.internalUserInviteRepository.getInviteByUuid(inviteUuid)
-
+    async execute(input: AcceptInternalUserInviteInput): Promise<AcceptInternalUserInviteOutput> {
+        const inviteToAccept = await this.internalUserInviteRepository.getInviteByUuid(input.inviteUuid)
         inviteToAccept.accept()
         await this.internalUserInviteRepository.update(inviteToAccept)
-
         const createdInternalUser = InternalUser.create(
             inviteToAccept.email,
             '',
             inviteToAccept.permission
         )
-
         await this.internalUserRepository.save(createdInternalUser)
+        return {
+            internalUserUuid: createdInternalUser.internalUserUuid
+        }
     }
+}
+export interface AcceptInternalUserInviteInput {
+    inviteUuid: string
+}
+export interface AcceptInternalUserInviteOutput {
+    internalUserUuid: string
 }

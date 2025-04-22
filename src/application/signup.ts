@@ -1,6 +1,6 @@
-import User, {UserPermission} from "../domain/user";
+import User, {UserPermission} from "../domain/entities/user";
 import * as crypto from "node:crypto";
-import {UserRepository} from "../domain/user.repository";
+import {UserRepository} from "../domain/repositories/user.repository";
 
 export default class Signup {
     constructor(

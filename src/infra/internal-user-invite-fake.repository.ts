@@ -1,5 +1,5 @@
-import {InternalUserInviteRepository} from "../domain/internal-user-invite.repository";
-import InternalUserInvite from "../domain/internal-user-invite";
+import {InternalUserInviteRepository} from "../domain/repositories/internal-user-invite.repository";
+import InternalUserInvite from "../domain/entities/internal-user-invite";
 
 export class InternalUserInviteRepositoryFake implements InternalUserInviteRepository {
     constructor(

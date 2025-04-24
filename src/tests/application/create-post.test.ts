@@ -9,10 +9,11 @@ import {InternalUserInviteRepository} from "../../domain/repositories/internal-u
 import {InternalUserRepository} from "../../domain/repositories/internal-user.repository";
 import AcceptInternalUserInvite from "../../application/accept-internal-user-invite";
 import {PostRepository} from "../../domain/repositories/post.repository";
+import {PostTypeEnum} from "../../domain/entities/post";
 
 test("Deve criar um post", async () => {
     const internalUserInviteRepository: InternalUserInviteRepository = new InternalUserInviteRepositoryFake()
-    const internalUserRepositoryFake: InternalUserRepository = new InternalUserRepositoryFake()
+    const internalUserRepository: InternalUserRepository = new InternalUserRepositoryFake()
     const postRepository: PostRepository = new PostFakeRepository()
 
     const inviteInput = {
@@ -28,12 +29,12 @@ test("Deve criar um post", async () => {
     }
     const {internalUserUuid} = await new AcceptInternalUserInvite(
         internalUserInviteRepository,
-        internalUserRepositoryFake
+        internalUserRepository
     ).execute(acceptInviteInput)
 
     const createPostInput: CreatePostInput = {
         title: "Title",
-        type: "MOVIE",
+        type: PostTypeEnum.MOVIE,
         genders: ["ACTION", "COMEDY"],
         categories: ["Baseado em livros"],
         releaseDate: new Date(),
@@ -61,24 +62,24 @@ test("Deve criar um post", async () => {
     }
     const createPostOutput = await new CreatePost(
         postRepository,
-        internalUserRepositoryFake
+        internalUserRepository
     ).execute(createPostInput)
     expect(createPostOutput.postUuid).toBeDefined()
     const createdPost = await postRepository.getPostByUuid(createPostOutput.postUuid)
-    expect(createdPost.title).toBe(createPostInput.title)
-    expect(createdPost.type).toBe(createPostInput.type)
-    expect(createdPost.genders).toBe(createPostInput.genders)
-    expect(createdPost.categories).toBe(createPostInput.categories)
-    expect(createdPost.releaseDate).toBe(createPostInput.releaseDate)
-    expect(createdPost.director).toBe(createPostInput.director)
-    expect(createdPost.whereWatch).toBe(createPostInput.whereWatch)
-    expect(createdPost.mainCast).toBe(createPostInput.mainCast)
-    expect(createdPost.hasAward).toBe(createPostInput.hasAward)
-    expect(createdPost.awards).toBe(createPostInput.awards)
-    expect(createdPost.funFacts).toBe(createPostInput.funFacts)
-    expect(createdPost.coverImage).toBe(createPostInput.coverImage)
-    expect(createdPost.cardImage).toBe(createPostInput.cardImage)
-    expect(createdPost.movieDurationHours).toBe(createPostInput.movieDurationHours)
-    expect(createdPost.seasons).toBe(createPostInput.seasons)
-    expect(createdPost.createdBy).toBe(createPostInput.createdBy)
+    expect(createdPost.getTitle()).toBe(createPostInput.title)
+    expect(createdPost.getType()).toBe(createPostInput.type)
+    expect(createdPost.getGenders()).toBe(createPostInput.genders)
+    expect(createdPost.getCategories()).toBe(createPostInput.categories)
+    expect(createdPost.getReleaseDate()).toBe(createPostInput.releaseDate)
+    expect(createdPost.getDirector()).toBe(createPostInput.director)
+    expect(createdPost.getWhereWatch()).toBe(createPostInput.whereWatch)
+    expect(createdPost.getMainCast()).toBe(createPostInput.mainCast)
+    expect(createdPost.getHasAward()).toBe(createPostInput.hasAward)
+    expect(createdPost.getAwards()).toBe(createPostInput.awards)
+    expect(createdPost.getFunFacts()).toBe(createPostInput.funFacts)
+    expect(createdPost.getCoverImage()).toBe(createPostInput.coverImage)
+    expect(createdPost.getCardImage()).toBe(createPostInput.cardImage)
+    expect(createdPost.getMovieDurationHours()).toBe(createPostInput.movieDurationHours)
+    expect(createdPost.getSeasons()).toBe(createPostInput.seasons)
+    expect(createdPost.getCreatedBy()).toBe(createPostInput.createdBy)
 })

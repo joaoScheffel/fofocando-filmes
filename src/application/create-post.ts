@@ -1,4 +1,4 @@
-import Post from "../domain/entities/post";
+import Post, {PostTypeEnum} from "../domain/entities/post";
 import {InternalUserRepository} from "../domain/repositories/internal-user.repository";
 import {PostRepository} from "../domain/repositories/post.repository";
 
@@ -11,34 +11,34 @@ export default class CreatePost {
     async execute(input: CreatePostInput): Promise<CreatePostOutput> {
         const internalUser = await this.internalUserRepository.getInternalUserByUuid(input.createdBy)
         if (!internalUser?.internalUserUuid?.length) throw new Error("Internal user not found")
-        const createdPost = Post.create(
-            input.title,
-            input.type,
-            input.genders,
-            input.categories,
-            input.releaseDate,
-            input.director,
-            input.whereWatch,
-            input.mainCast,
-            input.hasAward,
-            input.awards,
-            input.funFacts,
-            input.coverImage,
-            input.cardImage,
-            input.movieDurationHours,
-            input.seasons,
-            input.createdBy,
-        )
+        const createdPost = Post.create({
+            title: input.title,
+            type: input.type,
+            genders: input.genders,
+            categories: input.categories,
+            releaseDate: input.releaseDate,
+            director: input.director,
+            whereWatch: input.whereWatch,
+            mainCast: input.mainCast,
+            hasAward: input.hasAward,
+            awards: input.awards,
+            funFacts: input.funFacts,
+            coverImage: input.coverImage,
+            cardImage: input.cardImage,
+            movieDurationHours: input.movieDurationHours,
+            seasons: input.seasons,
+            createdBy: input.createdBy,
+        })
         await this.postRepository.save(createdPost)
         return {
-            postUuid: createdPost.postUuid
+            postUuid: createdPost.getPostUuid()
         }
     }
 }
 
 export interface CreatePostInput {
     title: string
-    type: string
+    type: PostTypeEnum
     genders: string[]
     categories: string[]
     releaseDate: Date

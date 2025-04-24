@@ -1,13 +1,14 @@
 import * as crypto from "node:crypto";
-import Post from "../../domain/entities/post";
+import Post, {PostProps, PostTypeEnum, PostUpdateProps} from "../../domain/entities/post";
 
-let createPostInput
+let postProps: PostProps
+let postUpdateProps: PostUpdateProps
 
 beforeEach(() => {
-    createPostInput = {
+    postProps = {
         postUuid: crypto.randomUUID(),
         title: "Title",
-        type: "MOVIE",
+        type: PostTypeEnum.MOVIE,
         genders: ["ACTION", "COMEDY"],
         categories: ["Baseado em livros"],
         releaseDate: new Date(),
@@ -37,88 +38,143 @@ beforeEach(() => {
         }],
         createdBy: crypto.randomUUID()
     }
+
+    postUpdateProps = {
+        title: "Title",
+        genders: ["COMEDY"],
+        categories: ["Baseado em fatos reais"],
+        releaseDate: new Date(),
+        director: "director 2",
+        whereWatch: ["NETFLIX"],
+        mainCast: [{
+            name: "name 2",
+            photo: "url 2"
+        }],
+        hasAward: true,
+        awards: [{
+            category: "Melhor filme 2",
+            awardType: "OSCAR_2",
+            year: 2024
+        }],
+        funFacts: [{
+            name: "name 2",
+            description: "description 2"
+        }],
+        coverImage: "url 2",
+        cardImage: "url 2",
+        movieDurationHours: 3,
+        seasons: [{
+            seasonName: "season 2",
+            releaseDate: new Date(),
+            episodesCount: 3
+        }]
+    }
+})
+
+test("Deve criar um post do tipo MOVIE", () => {
+    postProps.type = PostTypeEnum.MOVIE
+    delete postProps.seasons
+
+    const post = new Post(postProps)
+    expect(post.getPostUuid()).toBeDefined()
+    expect(post.getTitle()).toBe(postProps.title)
+    expect(post.getType()).toBe(PostTypeEnum.MOVIE)
+    expect(post.getGenders()).toBe(postProps.genders)
+    expect(post.getCategories()).toBe(postProps.categories)
+    expect(post.getReleaseDate()).toBe(postProps.releaseDate)
+    expect(post.getDirector()).toBe(postProps.director)
+    expect(post.getWhereWatch()).toBe(postProps.whereWatch)
+    expect(post.getMainCast()).toBe(postProps.mainCast)
+    expect(post.getHasAward()).toBe(postProps.hasAward)
+    expect(post.getAwards()).toBe(postProps.awards)
+    expect(post.getFunFacts()).toBe(postProps.funFacts)
+    expect(post.getCoverImage()).toBe(postProps.coverImage)
+    expect(post.getCardImage()).toBe(postProps.cardImage)
+    expect(post.getMovieDurationHours()).toBe(postProps.movieDurationHours)
+    expect(post.getSeasons()).toBe(postProps.seasons)
+    expect(post.getCreatedBy()).toBe(postProps.createdBy)
+})
+
+test("Deve criar um post do tipo SERIE", () => {
+    postProps.type = PostTypeEnum.SERIE
+    delete postProps.movieDurationHours
+
+    const post = new Post(postProps)
+    expect(post.getPostUuid()).toBeDefined()
+    expect(post.getTitle()).toBe(postProps.title)
+    expect(post.getType()).toBe(PostTypeEnum.SERIE)
+    expect(post.getGenders()).toBe(postProps.genders)
+    expect(post.getCategories()).toBe(postProps.categories)
+    expect(post.getReleaseDate()).toBe(postProps.releaseDate)
+    expect(post.getDirector()).toBe(postProps.director)
+    expect(post.getWhereWatch()).toBe(postProps.whereWatch)
+    expect(post.getMainCast()).toBe(postProps.mainCast)
+    expect(post.getHasAward()).toBe(postProps.hasAward)
+    expect(post.getAwards()).toBe(postProps.awards)
+    expect(post.getFunFacts()).toBe(postProps.funFacts)
+    expect(post.getCoverImage()).toBe(postProps.coverImage)
+    expect(post.getCardImage()).toBe(postProps.cardImage)
+    expect(post.getMovieDurationHours()).toBe(postProps.movieDurationHours)
+    expect(post.getSeasons()).toBe(postProps.seasons)
+    expect(post.getCreatedBy()).toBe(postProps.createdBy)
+})
+
+test("Deve atualizar um post do tipo MOVIE", () => {
+    postProps.type = PostTypeEnum.MOVIE
+    delete postProps.seasons
+
+    const post = new Post(postProps)
+    delete postUpdateProps.seasons
+    post.update(postUpdateProps)
+    expect(post.getTitle()).toBe(postUpdateProps.title)
+    expect(post.getGenders()).toBe(postUpdateProps.genders)
+    expect(post.getCategories()).toBe(postUpdateProps.categories)
+    expect(post.getReleaseDate()).toBe(postUpdateProps.releaseDate)
+    expect(post.getDirector()).toBe(postUpdateProps.director)
+    expect(post.getWhereWatch()).toBe(postUpdateProps.whereWatch)
+    expect(post.getMainCast()).toBe(postUpdateProps.mainCast)
+    expect(post.getHasAward()).toBe(postUpdateProps.hasAward)
+    expect(post.getAwards()).toBe(postUpdateProps.awards)
+    expect(post.getFunFacts()).toBe(postUpdateProps.funFacts)
+    expect(post.getCoverImage()).toBe(postUpdateProps.coverImage)
+    expect(post.getCardImage()).toBe(postUpdateProps.cardImage)
+    expect(post.getMovieDurationHours()).toBe(postUpdateProps.movieDurationHours)
+})
+
+test("Deve atualizar um post do tipo SERIE", () => {
+    postProps.type = PostTypeEnum.SERIE
+    delete postProps.movieDurationHours
+
+    const post = new Post(postProps)
+    delete postUpdateProps.movieDurationHours
+    post.update(postUpdateProps)
+    expect(post.getTitle()).toBe(postUpdateProps.title)
+    expect(post.getGenders()).toBe(postUpdateProps.genders)
+    expect(post.getCategories()).toBe(postUpdateProps.categories)
+    expect(post.getReleaseDate()).toBe(postUpdateProps.releaseDate)
+    expect(post.getDirector()).toBe(postUpdateProps.director)
+    expect(post.getWhereWatch()).toBe(postUpdateProps.whereWatch)
+    expect(post.getMainCast()).toBe(postUpdateProps.mainCast)
+    expect(post.getHasAward()).toBe(postUpdateProps.hasAward)
+    expect(post.getAwards()).toBe(postUpdateProps.awards)
+    expect(post.getFunFacts()).toBe(postUpdateProps.funFacts)
+    expect(post.getCoverImage()).toBe(postUpdateProps.coverImage)
+    expect(post.getCardImage()).toBe(postUpdateProps.cardImage)
+    expect(post.getMovieDurationHours()).toBe(postUpdateProps.movieDurationHours)
 })
 
 test("Não deve criar um post do tipo MOVIE inválido", () => {
-    expect(() => new Post(
-        createPostInput.postUuid,
-        createPostInput.title,
-        createPostInput.type,
-        createPostInput.genders,
-        createPostInput.categories,
-        createPostInput.releaseDate,
-        createPostInput.director,
-        createPostInput.whereWatch,
-        createPostInput.mainCast,
-        createPostInput.hasAward,
-        createPostInput.awards,
-        createPostInput.funFacts,
-        createPostInput.coverImage,
-        createPostInput.cardImage,
-        createPostInput.movieDurationHours,
-        createPostInput.seasons,
-        createPostInput.createdBy,
-    )).toThrow(new Error("An movie post cannot have seasons"))
-
-    expect(() => new Post(
-        createPostInput.postUuid,
-        createPostInput.title,
-        createPostInput.type,
-        createPostInput.genders,
-        createPostInput.categories,
-        createPostInput.releaseDate,
-        createPostInput.director,
-        createPostInput.whereWatch,
-        createPostInput.mainCast,
-        createPostInput.hasAward,
-        createPostInput.awards,
-        createPostInput.funFacts,
-        createPostInput.coverImage,
-        createPostInput.cardImage,
-        null,
-        [],
-        createPostInput.createdBy,
-    )).toThrow(new Error("An movie post must have movie duration"))
+    postProps.type = PostTypeEnum.MOVIE
+    expect(() => new Post(postProps)).toThrow(new Error("An movie post cannot have seasons"))
+    delete postProps.seasons
+    delete postProps.movieDurationHours
+    expect(() => new Post(postProps)).toThrow(new Error("An movie post must have movie duration"))
 })
 
 test("Não deve criar um post do tipo SERIE inválido", () => {
-    expect(() => new Post(
-        createPostInput.postUuid,
-        createPostInput.title,
-        "SERIE",
-        createPostInput.genders,
-        createPostInput.categories,
-        createPostInput.releaseDate,
-        createPostInput.director,
-        createPostInput.whereWatch,
-        createPostInput.mainCast,
-        createPostInput.hasAward,
-        createPostInput.awards,
-        createPostInput.funFacts,
-        createPostInput.coverImage,
-        createPostInput.cardImage,
-        createPostInput.movieDurationHours,
-        createPostInput.seasons,
-        createPostInput.createdBy,
-    )).toThrow(new Error("An serie post cannot have movie duration"))
-
-    expect(() => new Post(
-        createPostInput.postUuid,
-        createPostInput.title,
-        "SERIE",
-        createPostInput.genders,
-        createPostInput.categories,
-        createPostInput.releaseDate,
-        createPostInput.director,
-        createPostInput.whereWatch,
-        createPostInput.mainCast,
-        createPostInput.hasAward,
-        createPostInput.awards,
-        createPostInput.funFacts,
-        createPostInput.coverImage,
-        createPostInput.cardImage,
-        null,
-        [],
-        createPostInput.createdBy,
-    )).toThrow(new Error("An serie post must have seasons"))
+    postProps.type = PostTypeEnum.SERIE
+    expect(() => new Post(postProps)).toThrow(new Error("An serie post cannot have movie duration"))
+    delete postProps.movieDurationHours
+    delete postProps.seasons
+    expect(() => new Post(postProps)).toThrow(new Error("An serie post must have seasons"))
 })

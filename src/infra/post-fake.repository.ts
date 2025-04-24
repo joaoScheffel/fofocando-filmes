@@ -11,6 +11,10 @@ export class PostFakeRepository implements PostRepository {
     }
 
     async getPostByUuid(postUuid: string): Promise<Post> {
-        return this.posts.find((post) => post.postUuid === postUuid)
+        return this.posts.find((post) => post.getPostUuid() === postUuid)
+    }
+
+    async updateOne(post: Post): Promise<void> {
+
     }
 }
